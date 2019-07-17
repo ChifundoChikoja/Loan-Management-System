@@ -1,0 +1,160 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: coutinho
+ * Date: 2/17/19
+ * Time: 12:27 PM
+ */
+require_once TEMP.'top-bar.phtml';
+require_once TEMP.'admin-nav.phtml';
+$counter = 1;
+?>
+
+<div class="container">
+    <div class="console">
+        <br>
+        <h4>Administration</h4>
+        <hr style="border: none;height: 3px;color: #204d74;background-color: #204d74">
+        <div class="row">
+            <div class="col-sm-3">
+                <form action="/admin/administration" method="post" id="create-user-form" style=" padding: 5px">
+                    <p style="text-align: center; padding: 0" >User add <span class="fa fa-user-plus"></span> </p>
+                    <div class="form-group">
+                        <div class="cols-sm-5">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                <input type="text" class="form-control input-sm" name="name" id="name"  placeholder="Name"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="cols-sm-5">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                <input type="text" class="form-control input-sm" name="surname" id="surname"  placeholder="Last Name"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="cols-sm-5">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                <input type="text" class="form-control input-sm" name="uname" id="uname"  placeholder="username"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="cols-sm-5">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-lock fa" aria-hidden="true"></i></span>
+                                <input type="password" class="form-control input-sm" name="password" id="pass"  placeholder="Password"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="cols-sm-5">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-lock fa" aria-hidden="true"></i></span>
+                                <input type="password" class="form-control input-sm" name="password2" id="pass2"  placeholder="password "/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="cols-sm-5">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-list fa" aria-hidden="true"></i></span>
+                                <select name="role" id="role" class="form-control input-sm">
+                                    <option value="r">Admin</option>
+                                    <option value="u">Standard User</option>
+                                    <option value="a">Accounts</option>
+                                </select>
+                            </div>
+                            <input type="submit" class="btn btn-primary btn-block input-sm" value="create user" name="add-user" style="margin-top: 3px">
+                        </div>
+                    </div>
+                </form>
+                <?php if (!empty(adminController::$message)): ?>
+                <div class="panel-success">
+                    <h5 class="panel-heading"> <?php echo adminController::$message?></h5>
+                </div>
+                <?php endif; ?>
+                <?php if (!empty(adminController::$error)): ?>
+                    <div class="panel-danger">
+                        <h5 class="panel-heading"> <?php echo adminController::$error?></h5>
+                    </div>
+                <?php endif; ?>
+            </div>
+            <div class="col-sm-7">
+                <div class="panel panel-default" >
+                    <div class="panel-heading">
+                        <h5 class="panel-title"> Manage Users</h5>
+                    </div>
+                    <div style="margin-left: 20%">
+                        <div class="panel-body" style="min-height: 250px">
+                            <form action="/admin/administration" method="post" class="form-inline">
+                                <label for="key">Search</label>
+                                <input type="text" class="form-control input-sm" name="key" id="key">
+                                <input type="Submit" name="search" class="btn btn-success btn-sm" value="search">
+                            </form>
+                            <br><br>
+                            <?php if (!empty(adminController::$arrayContainer)): ?>
+<!--                                        Table of results-->
+                            <div class="table-responsive-sm" style="overflow-x:auto;">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Name</th>
+                                            <th>Surname</th>
+                                            <th>Username</th>
+                                            <th>Role</th>
+                                            <th colspan="2">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <?php foreach (adminController::$arrayContainer as $user): ?>
+                                            <td><?php echo $counter?></td>
+                                            <td><?php echo $user['firstname'] ?></td>
+                                            <td><?php echo $user['surname'] ?></td>
+                                            <td><?php echo $user['username'] ?></td>
+                                            <td><?php echo $user['role'] ?></td>
+                                            <td>
+                                                <form action="/admin/administration" class="" method="post">
+                                                    <input type="hidden" value="<?=$user['userID']?>" name="userID">
+                                                    <input type="submit" class="btn btn-primary table-btn" style="width: 50px" name="edit-user" value="Edit">
+                                                </form>
+                                            </td>
+                                            <td>
+                                                <button style="width: 50px; margin-left: -15px" class="delete btn btn-danger table-btn" id="del_<?=$user['userID']?>">Delete </button>
+                                            </td>
+                                        </tr>
+                                    <?php $counter++; endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-sm-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h5 class="panel-title">Users Summary</h5>
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                            <li>All Users</li>
+                            <li>All admins</li>
+                            <li>All Standard users</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,75 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: coutinho
+ * Date: 4/30/19
+ * Time: 1:49 PM
+ */
+require_once TEMP . 'top-bar.phtml';
+require_once TEMP . 'admin-nav.phtml';
+// getting the clients data
+$clientID = $this->view_data[5];
+require_once MODEL.'adminModel.php';
+$adminModel = new adminModel();
+$details = $adminModel->client($clientID,1,[]);
+
+?>
+
+<div class="container">
+    <div class="console">
+        <br>
+        <h4>Edit Client <span class="fa fa-edit"></span>: &nbsp; <?php echo $details[0]['firstname']." "." ".$details[0]['maiden']." ".$details[0]['surname']?></h4>
+        <hr style="border: none;height: 3px;color: #204d74;background-color: #204d74"
+        <div class="pchange-wrapper">
+            <form action="/admin/client" method="post" class="pchange-form" id="pchange-form">
+                <h5 style="text-align: center"> Change Details </h5>
+                <hr style="height: 3px; color: #1c7430; background-color: #1c7430">
+
+                <div class="form-group">
+                    <div class="cols-sm-5">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control input-sm" name="name" id="name" value="<?= $details[0]['firstname'] ?>"placeholder="Name"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="cols-sm-5">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control input-sm" name="surname" id="surname" value="<?= $details[0]['surname'] ?>" placeholder="Last Name"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="cols-sm-5">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-lock fa" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control input-sm" name="maiden" id="maiden"  value="<?php echo $details[0]['maiden']?>" placeholder="Maiden"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="cols-sm-5">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-lock fa" aria-hidden="true"></i></span>
+<!--                            <input type="password" class="form-control input-sm" name="name" id="pass2"  placeholder="Enter new password again"/>-->
+                            <select name="group" id="" class="form-control input-sm">
+                                <?php foreach ($this->view_data as $group):?>
+                                    <option value="<?php echo $group['groupID'] ?>"><?php echo $group['name'] ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="userID" value="<?= $clientID?>">
+                <button type="submit" name="dchange" class=" btn btn-success" style="margin-left: 7%">change Details</button>
+                <a href="/admin/client" class=" btn btn-warning">cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+

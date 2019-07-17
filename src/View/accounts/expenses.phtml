@@ -1,0 +1,73 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: coutinho
+ * Date: 4/30/19
+ * Time: 1:49 PM
+ */
+require_once TEMP . 'top-bar.phtml';
+require_once TEMP . 'accounts-header.phtml';
+?>
+
+<div class="container">
+    <div class="console">
+        <br>
+        <h4>Expenses (accounts)<span class="fa fa-shopping-cart"></span></h4>
+        <hr style="border: none;height: 3px;color: #204d74;background-color: #204d74">
+        <div class="row">
+            <div class="col-sm-6" style="box-shadow: 0px 5px 35px black; margin-left:">
+                <h5 style="text-align: center">New Expense <span class="fa fa-plus"></span></h5>
+                <hr style="height: 3px; color: #1c7430; background-color: #1c7430">
+                <form action="/accounts/expense" method="post" style=" ">
+                    <div class="form-group">
+                        <label for="date" class="control-label col-sm-3">Date:</label>
+                        <div class="col-sm-5">
+                            <input type="date" id="date" name="date" class="form-control input-sm" required>
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="form-group">
+                        <label for="amount" class="control-label col-sm-3">Amount:</label>
+                        <div class="col-sm-5">
+                            <input type="number" id="amount" name="amount" class="form-control input-sm" required>
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="form-group">
+                        <label for="desc" class="control-label col-sm-3">Description</label>
+                        <div class="col-sm-5">
+                            <div id="editor">
+                                <textarea name="desc" id="desc" cols="29" rows="3" style="resize: none"></textarea>
+                            </div>
+                            <button type="submit" name="save-expense" class="btn btn-primary btn-block">Save expense</button>
+                            <br>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="col-sm-6" style="border: 1px solid rgba(0, 0, 0, 0.1); min-height: 150px;" >
+                <h5 style="text-align: center">Find Expense(Filter)</h5>
+                <hr>
+                <form method="post" class="form-inline" id="find-expense-form">
+                    <input type="text" id="expense-index" style="" class="form-control input-sm" placeholder="Search (by date,desc).." name="search">
+                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-search"></i></button>
+                </form>
+                <?php if (!empty(accountsController::$message)): ?>
+                    <div class="panel-success">
+                        <h5 class="panel-heading" style="text-align: center"> <?= accountsController::$message ?></h5>
+                    </div>
+                <?php endif; ?>
+                <?php if (!empty(accountsController::$error)): ?>
+                    <div class="panel-danger">
+                        <h5 class="panel-heading" style="text-align: center"> <?= accountsController::$error ?></h5>
+                    </div>
+                <?php endif; ?>
+                <br>
+                <div id="expense-result-display"></div>
+            </div>
+
+            </div>
+        </div>
+    </div>
+</div>

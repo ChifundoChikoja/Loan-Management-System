@@ -1,0 +1,53 @@
+
+
+<?php
+require_once TEMP . 'top-bar.phtml';
+require_once TEMP . 'admin-nav.phtml';
+?>
+
+<div class="container">
+    <div class="console">
+        <br>
+        <h4>Edit <span class="fas fa-adjust"></span>: &nbsp; <?php echo"" ?></h4>
+        <hr style="border: none;height: 3px;color: #204d74;background-color: #204d74">
+        <div class="row">
+            <div class="pchange-wrapper">
+                <form action="/admin/messages" method="post" class="pchange-form" id="pchange-form">
+                    <h5 style="text-align: center">Change Message</h5>
+                    <hr style="height: 3px; color: #1c7430; background-color: #1c7430">
+                    <div class="form-group">
+                        <label for="title" class="control-label col-sm-3">Title :</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="title" value="<?php echo $this->view_data[0]['title'] ?>" name="title" class="form-control" placeholder="heading here">
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="form-group">
+                        <label for="message" class="control-label col-sm-3">Story :</label>
+                        <div class="col-sm-9">
+                            <textarea name="message" id="message" cols="60" rows="5" class="form-control"><?php echo $this->view_data[0]['body'] ?></textarea><br>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="type" class="control-label col-sm-3">type :</label>
+                        <div class="col-sm-9">
+                            <select name="type" style="" class="form-control " id="type">
+                                <option value="">   --- select type ---</option>
+                                <option value="1">  info</option>
+                                <option value="2">Entertainment</option>
+                                <option value="3">News</option>
+                            </select>
+                            <br>
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="userID" value="<?= $this->view_data['messageID'] ?>">
+                    <button type="submit" name="edit-message-btn" class=" btn btn-success" style="margin-left: 31%">Edit message</button>
+                    <a href="/admin/messages" class=" btn btn-warning">cancel</a>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

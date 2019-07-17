@@ -1,0 +1,49 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: coutinho
+ * Date: 2/14/19
+ * Time: 12:41 PM
+ */
+require_once TEMP.'top-bar2.phtml';
+require_once TEMP.'private-nav.phtml';
+//getting all the messages
+
+require_once CONTROLLER.'adminController.php';
+$admController = new adminController();
+$messages = $admController->requireModel()->message([],2);
+//var_dump(Session::get('loggedIn'));
+?>
+
+<div class="container">
+    <div class="console">
+        <br>
+        <h4>My Console (private)</h4>
+        <hr style="border: none;height: 3px;color: #204d74;background-color: #204d74">
+        <div class="col-sm-12" style="background-color: #17a2b8; color: white; border-radius: 4px; margin-bottom: 20px">
+            <h5 style="padding: 8px">Welcome <?php echo Session::get('loggedIn')?></h5>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-4">
+                <h5 class="" style="text-align: center; color: #d9534f">Notifications <span class="fa fa-bell"></span></h5>
+                <hr>
+            </div>
+            <div class="col-sm-8" style="">
+                <div class="panel panel-default" style="box-shadow: 0px 5px 35px black">
+                    <div class="panel-heading">
+                        <h5 style="text-align: center; color: #1c7430">Administrator Messages &nbsp; <span class="fa fa-envelope"></span></h5>
+                    </div>
+                    <div class="panel-body">
+                        <h5 style="text-align: center; color: #d9534f">News and Notices <span class="fa fa-signal"></span></h5>
+                        <div style="position: relative; height: 200px; overflow: auto">
+                            <?php $a =1; foreach ($messages as $message): ?>
+                                <p style="color: #1b6d85; padding: 10px"><?php echo $a." . ".$message['body']."    ".$message['date'] ?></p>
+                            <?php ++$a; endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+
+        </div>
+    </div>
+</div>

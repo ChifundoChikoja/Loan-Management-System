@@ -1,0 +1,160 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: coutinho
+ * Date: 4/30/19
+ * Time: 1:57 PM
+ */
+require_once TEMP . 'top-bar.phtml';
+require_once TEMP . 'admin-nav.phtml';
+$iterator = 1;
+?>
+
+<div class="container">
+    <div class="console">
+        <br>
+        <h4>Set Up <span class="fas fa-adjust"></span></h4>
+        <hr style="border: none;height: 3px;color: #204d74;background-color: #204d74">
+        <div class="row">
+            <div class="col-sm-5">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h5 class="panel-title" style="text-align: center">Manage Payment Holidays</h5>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-9">
+                                <form action="/admin/setup" method="post">
+                                    <div class="form-group">
+                                        <label for="date" class="control-label col-sm-4">Date</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input type="date" name="date" id="date" class="form-control input-sm" required>
+                                    </div>
+                                    <br>
+                                    <div class="form-group">
+                                        <label for="desc" class="control-label col-sm-12">Description</label>
+                                    </div>
+                                    <br>
+                                    <div class="col-sm-12">
+                                        <div style="overflow-x: auto">
+                                            <div id="editor">
+                                                <textarea name="desc" id="desc" cols="32.5" rows="3" style="resize: none"></textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="" style="padding-top: 4px">
+                                            <input type="submit" id="sub" name="add-holiday" class="btn btn-primary btn-sm btn-block" style="width: 100%" value="Add holiday">
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                            <div class="col-sm-3"></div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+
+                <div class="panel-body" style="border: 1px solid silver">
+                    <form action="/admin/setup" method="post">
+                        <h5 style="text-align: center">Add collection day</h5>
+                        <div class="form-group">
+                            <label for="day" class="control-label col-sm-2">Weekday</label>
+                            <div class="col-sm-7">
+                                <select name="day" id="day" class="form-control input-sm">
+                                    <option value="Sun">Sunday</option>
+                                    <option value="Mon">Monday</option>
+                                    <option value="Tue">Tuesday</option>
+                                    <option value="Wed">Wednesday</option>
+                                    <option value="Thu">Thursday</option>
+                                    <option value="Fri">Friday</option>
+                                    <option value="Sat">Saturday</option>
+                                </select>
+                                <input type="submit" name="add-weekday" class="btn btn-primary btn-block btn-sm" style="margin-top: 4px">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-sm-5" style="border-right: solid 1px silver">
+                <h5 style="text-align: center">Holidays</h5>
+                <hr>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Date</th>
+                            <th>Description</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <?php foreach ($this->view_data as $holiday): ?>
+                            <td><?php echo $iterator ?></td>
+                            <td><?php echo $holiday['date'] ?></td>
+                            <td><?php echo $holiday['details'] ?></td>
+                            <td>
+                                <form action="/admin/setup" method="post">
+                                    <input type="hidden" value="<?php echo $holiday['HolidayID'] ?>" id="index" name="index">
+                                    <a href="#edit-zone-mod" rel="modal:open" style="padding-right: 7px" class="btn btn-primary table-btn">&nbsp;Edit </a>
+                                </form>
+                            </td>
+                            <td>
+                                <button style="width: 50px; margin-left: -25px" class="delete_holiday btn btn-danger table-btn" id="del_<?=$holiday['HolidayID']?>">Delete </button>
+                            </td>
+                        </tr>
+                        <?php
+                        $iterator++;
+                        endforeach;
+                        ?>
+                        </tbody>
+                    </table>
+                </div>
+
+                <?php if (!empty(adminController::$message)): ?>
+                    <div class="panel-success">
+                        <h5 class="panel-heading" style="text-align: center"> <?= adminController::$message ?></h5>
+                    </div>
+                <?php endif; ?>
+                <?php if (!empty(adminController::$error)): ?>
+                    <div class="panel-danger">
+                        <h5 class="panel-heading" style="text-align: center"> <?= adminController::$error ?></h5>
+                    </div>
+                <?php endif; ?>
+            </div>
+            <div class="col-sm-2">
+                <h5>Manage Collection Days</h5>
+                <hr>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Day</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <?php $iterator =1; foreach (adminController::$arrayContainer as $day): ?>
+                            <td><?php echo $iterator?></td>
+                            <td><?php echo $day['day']?></td>
+                            <td>
+                                <form action="/admin/setup" method="post" onsubmit=" botConfirm();">
+                                    <input type="hidden" value="<?=$day['dayID']?>" name="day">
+                                    <button style="" class="btn btn-danger table-btn" name="delete-day">Delete </button>
+                                </form>
+                            </td>
+                        </tr>
+                        <?php $iterator++;endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br><br><br>

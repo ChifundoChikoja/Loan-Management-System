@@ -1,0 +1,141 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: coutinho
+ * Date: 4/30/19
+ * Time: 2:15 PM
+ */
+require_once TEMP . 'top-bar2.phtml';
+require_once TEMP . 'private-nav.phtml';
+//var_dump(Session::get('loggedIn'));
+?>
+
+<div class="container">
+    <div class="console">
+        <br>
+        <h4>Registration (private)</h4>
+        <hr style="border: none;height: 3px;color: #204d74;background-color: #204d74">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h5 class="panel-title" style="text-align: center">
+                            Register
+                        </h5>
+                    </div>
+                    <div class="panel-body">
+                        <p>Please download the template
+                        <form action="/private/registration" name="post" method="post">
+                            <button type="submit" class="btn btn-default btn-sm" name="exp-client-temp"> Download <span class="fa fa-download"></span></button>
+                        </form>
+                        <br>
+                        <p><b>NB: </b> The File uploaded should not contain headers</p>
+                        <p>The file should be in <b>.csv</b> format</p>
+                        <br>
+                        <p>
+                        <form action="/private/registration" method="post" id="upload-client-form" enctype="multipart/form-data">
+                            <label for="file" class="control-label col-sm-2" style="margin-left: -10px"> file: </label>
+                            <input type="file" class="form-control input-sm" id="file" name="clients">
+                            <input type="submit" name="upload" class="btn btn-primary btn-block btn-sm" value="upload" style="margin-top: 5px">
+                        </form>
+                    </div>
+                </div>
+                <?php if (!empty(privateController::$message)): ?>
+                <div class="panel-success">
+                    <h6 class="panel-heading"><?php echo privateController::$message?></h6>
+                </div>
+                <?php elseif (!empty(privateController::$error)): ?>
+                    <div class="panel-danger">
+                        <h6 class="panel-heading"><?php echo privateController::$message?></h6>
+                    </div>
+                <?php endif; ?>
+            </div>
+            <div class="col-sm-8">
+                <div class="panel panel-default" style="overflow-y: scroll">
+                    <div class="panel-heading">
+                        <h6 class="panel-title" style="text-align: center">Registration Form</h6>
+                    </div>
+                    <div class="panel-body">
+                        <form action="/private/registration" id="client-form" method="post" ">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="form-group col-md-6 col-sm-6">
+                                    <label for="id">National ID* </label>
+                                    <input type="text" name="national_id" class="form-control input-sm" id="id"
+                                           placeholder="" required>
+                                </div>
+                                <div class="form-group col-md-6 col-sm-6">
+                                    <label for="name">Name* </label>
+                                    <input type="text" name="first_name" class="form-control input-sm" id="name"
+                                           placeholder="" required>
+                                </div>
+                                <div class="form-group col-md-6 col-sm-6">
+                                    <label for="surname">Surname*</label>
+                                    <input type="text" name="surname" class="form-control input-sm" id="surname"
+                                           placeholder="" required>
+                                </div>
+
+                                <div class="form-group col-md-6 col-sm-6">
+                                    <label for="maiden">Maiden*</label>
+                                    <input type="text" name="maiden" class="form-control input-sm" id="maiden"
+                                           placeholder="" required>
+                                </div>
+
+                                <div class="form-group col-md-6 col-sm-6">
+                                    <label for="group">Client Group*</label>
+                                    <select name="group" id="group" class="form-control input-sm">
+                                        <option value="none">-- Select Group --</option>
+                                        <option value="8">VZ001</option>
+                                        <option value="3">VZ002</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-md-6 col-sm-6">
+                                    <label for="gender">Gender* &nbsp;&nbsp;&nbsp;</label>
+                                    <input type="radio" class="" name="gender" value="F" id="gender">Female
+                                    <input type="radio" class="" name="gender" value="M" id="gender">Male
+                                </div>
+
+
+                                <div class="form-group col-md-6 col-sm-6">
+                                    <label for="marital">Marital Status* &nbsp;&nbsp;&nbsp;</label>
+                                    <input type="radio" class="" name="marital" value="sin" id="marital">Single
+                                    <input type="radio" class="" name="marital" value="mar" id="marital">Married
+                                    <input type="radio" class="" name="marital" value="wid" id="marital">Widowed
+                                </div>
+
+                                <div class="form-group col-md-6 col-sm-6">
+                                    <label for="dob">DOB*</label>
+                                    <input type="date" name="dob" class="form-control input-sm" id="dob"
+                                           placeholder="" required>
+                                </div>
+
+                                <div class="form-group col-md-6 col-sm-6">
+                                    <label for="children">Children (No)*</label>
+                                    <input type="number" name="children" class="form-control input-sm" id="children"
+                                           placeholder="" required>
+                                </div>
+
+                                <div class="form-group col-md-6 col-sm-6">
+                                    <label for="home">Home Address</label>
+                                    <input type="text" name="home" class="form-control input-sm" id="home"
+                                           placeholder="" required>
+                                </div>
+
+                                <div class="form-group col-md-6 col-sm-6">
+                                    <label for="cell">Cell Phone <span class="fa fa-phone"></span></label>
+                                    <input type="number" name="phone" id="cell" class="form-control input-sm">
+                                </div>
+
+                                <input type="submit" name="add_client" class="btn btn-primary" value="create client"
+                                       style="margin-left: 15px">
+                                <br><br>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</div>

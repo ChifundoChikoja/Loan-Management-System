@@ -1,0 +1,83 @@
+<?php
+require_once TEMP.'top-bar2.phtml';
+require_once TEMP.'private-nav.phtml';
+
+//private model for getting the installment
+$totalExp = 0.00;
+require_once MODEL.'privateModel.php';
+$prvModel = new privateModel();
+$counter =1;
+?>
+
+<div class="container">
+    <div class="console">
+        <br>
+        <h4>collections (private)</h4>
+        <hr style="border: none;height: 3px;color: #204d74;background-color: #204d74">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="pane panel-default">
+                    <div class="panel-heading">
+                        <h5 class="panel-title">Collections <?= date('d-M-Y') ?></h5>
+                    </div>
+                    <div class="panel-body">
+                        <br>
+                        <div class="table-responsive" style="position: relative; height: 200px; overflow: auto">
+                            <table class="table table-bordered table-striped medium-text" style="font-family: Cantarell; border-radius: 10px">
+                                <thead style="background-color: #ced4da; ">
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Client</th>
+                                        <th>Group</th>
+                                        <th>tot Due</th>
+                                        <th>Paid</th>
+                                        <th>Balance</th>
+                                        <th>Installment</th>
+                                        <th>Arrears</th>
+                                        <th>Advance</th>
+                                        <th>Expectation</th>
+                                        <th colspan="2">Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <?php foreach ($this->view_data as $loan): ?>
+                                    <?php $totalExp = $totalExp + $loan['dailyPayment']; ?>
+                                    <td><?php echo $counter;?></td>
+                                    <td><?php echo $loan['surname']." ". $loan['firstname']?></td>
+                                    <td><?php echo $loan['gname'] ?></td>
+                                    <td><?php echo $loan['totalDue'] ?></td>
+                                    <td><?php echo $loan['amountPaid'] ?></td>
+                                    <td><?php echo $loan['balance'] ?></td>
+                                    <td><?php echo $prvModel->getInstallment($loan['loanID']) ?></td>
+                                    <td><?php echo $loan['totalArrears'] ?></td>
+                                    <td>0.00</td>
+                                    <td><?php echo $loan['dailyPayment'] ?></td>
+                                    <td>
+                                        <form action="/private/collection" method="post" class="form-inline" id="repay-form">
+                                            <input type="hidden" name="installment" value="<?php echo $prvModel->getInstallment($loan['loanID']) ?>">
+                                            <input type="hidden" value="<?= $loan['loanID']?>" name="loanID">
+                                            <input type="hidden"  value="<?=$loan['dailyPayment']?>" name="exp">
+                                            <input type="text" id="payback" required name="amount" class="form-control input-sm flat-in" placeholder=" amount (mwk)">
+                                            <button type="submit" name="pay_now" class="table-btn btn btn-primary"  style="padding: 2px; border-radius: 2px">pay now </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                <?php $counter++; endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <hr style="border: 1px solid forestgreen">
+                        <h4 style="text-align: center"> Graphical Summary  <span class="fa fa-chart-pie"></span> and <b>Reports</b> <span class="fa fa-pencil"></span></h4>
+                        <div class="daily-chart-summary" style="width: 350px; height: 130px ;">
+                            <canvas id="daily-summary-canvas"></canvas>
+                            <br><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

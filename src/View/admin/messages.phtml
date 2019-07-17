@@ -1,0 +1,98 @@
+
+<?php
+/**
+ * Created by PhpStorm.
+ * User: coutinho
+ * Date: 4/30/19
+ * Time: 1:49 PM
+ */
+require_once TEMP . 'top-bar.phtml';
+require_once TEMP . 'admin-nav.phtml';
+?>
+<div class="container">
+    <div class="console">
+        <br>
+        <h4>Messages &nbsp; <span class="fa fa-envelope"></span></h4>
+        <hr style="border: none;height: 3px;color: #204d74;background-color: #204d74">
+        <div class="row">
+            <div class="col-sm-3">
+                <br>
+                <aside>
+                    <h5 style="text-align: center; color: #1b6d85">Manage stories <span class="fa fa-edit"></span></h5>
+                    <hr>
+                        <div style="position: relative; height: 250px; overflow: auto">
+                            <?php $a =1; foreach ($this->view_data as $message): ?>
+                                <form action="/admin/messages" method="post" class="">
+
+                                        <p>
+                                            <?=$a."->".$message['date']." ". $message['title']." ".$message['publisher']?>
+                                            <input type="hidden" name="messageID" value="<?php echo $message['messageID'] ?>">
+                                            <input name="editMessage" type="submit" class="btn btn-default btn-sm" style="" value="View">
+                                            <input name="delete-btn" type="submit" class="btn btn-default btn-sm" style="background-color: #f1b0b7; color: white" value="Delete message">
+                                            <hr>
+                                        </p>
+                                </form>
+                            <?php ++$a; endforeach; ?>
+                        </div>
+                </aside>
+                <?php if (!empty(adminController::$message)): ?>
+                    <div class="panel-success">
+                        <h5 class="panel-heading" style="text-align: center"> <?= adminController::$message ?></h5>
+                    </div>
+                <?php endif; ?>
+                <?php if (!empty(adminController::$error)): ?>
+                    <div class="panel-danger">
+                        <h5 class="panel-heading" style="text-align: center"> <?= adminController::$error ?></h5>
+                    </div>
+                <?php endif; ?>
+            </div>
+            <div class="col-sm-8">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h5 style="text-align: center">Post Messages <span class="fa fa-envelope"></span></h5>
+                        <hr>
+                    </div>
+                    <div class="panel-body">
+                        <form action="/admin/messages" id="message-form" method="post">
+
+<!--                            Hidden data-->
+                            <input type="hidden" name="publisher" value="<?php echo Session::get('loggedIn')?>">
+                            <input type="hidden" name="date" value="<?php echo date('Y-m-d')?>">
+                            <div class="form-group">
+                                <label for="heading" class="control-label col-sm-2">Heading :</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="title" name="title" class="form-control" placeholder="heading here">
+                                </div>
+                            </div>
+                            <br><br>
+                            <div class="form-group">
+                                <label for="message" class="control-label col-sm-2">Story :</label>
+                                <div class="col-sm-10">
+                                    <textarea name="message" id="message" cols="60" rows="5" class="form-control"></textarea><br>
+                                </div>
+                            </div>
+
+                                <div class="form-group">
+                                    <label for="type" class="control-label col-sm-2">type :</label>
+                                    <div class="col-sm-5">
+                                        <select name="type" style="" class="form-control " id="type">
+                                            <option value="">   --- select type ---</option>
+                                            <option value="1">  info</option>
+                                            <option value="2">Entertainment</option>
+                                            <option value="3">News</option>
+                                        </select>
+                                       <br>
+                                    </div>
+                                </div>
+                            <label for="sub" class="col-sm-2"></label>
+                            <div class="col-sm-8">
+                                <button type="submit" name="publish" class="btn btn-default" style="margin-left: 40%; width: 50%; background-color: goldenrod">Publish <span class="fa fa-thumbs-o-up"></span></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

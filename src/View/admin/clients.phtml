@@ -1,0 +1,52 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: coutinho
+ * Date: 4/30/19
+ * Time: 2:15 PM
+ */
+require_once TEMP.'top-bar.phtml';
+require_once TEMP.'admin-nav.phtml';
+//var_dump(Session::get('loggedIn'));
+?>
+
+<div class="container">
+    <div class="console">
+        <br>
+        <h4>Manage Clients (private)</h4>
+        <hr style="border: none;height: 3px;color: #204d74;background-color: #204d74">
+        <div class="row">
+            <div class="col-sm-3">
+                <h5 style="text-align: center"><b>Clear</b> Client(set balance=0)</h5>
+                <hr style="height: 3px; color: #1c7430; background-color: #1c7430">
+                <form method="post" class="form-inline" id="find-client-form">
+                    <input type="text" id="client" style="" class="form-control input-sm" placeholder="Search.." name="search">
+                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-search"></i></button>
+                </form>
+
+                <?php if (!empty(adminController::$message)): ?>
+                    <div class="panel-success">
+                        <h5 class="panel-heading" style="text-align: center"> <?= adminController::$message ?></h5>
+                    </div>
+                <?php endif; ?>
+                <?php if (!empty(adminController::$error)): ?>
+                    <div class="panel-danger">
+                        <h5 class="panel-heading" style="text-align: center"> <?= adminController::$error ?></h5>
+                    </div>
+                <?php endif; ?>
+            </div>
+            <div class="col-sm-9">
+                    <div class="clients-menu" style="border: 1px solid silver; padding: 15px" >
+                         <form method="post" class="form-inline" id="find-client-form">
+                            <input type="text" id="client-index-a" style="" class="form-control input-sm" placeholder="Search.." name="search">
+                            <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-search"></i></button>
+                        </form>
+
+                        <hr>
+                        <div id="client-result-display" style="position: relative; height: 200px; min-height: 60px; overflow: auto"></div>
+                    </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>

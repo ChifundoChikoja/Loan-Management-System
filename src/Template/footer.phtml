@@ -1,0 +1,67 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: coutinho
+ * Date: 2/13/19
+ * Time: 10:58 PM
+ */
+?>
+<!--add model -->
+<div id="edit-data-modal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 style="text-align: center">Update Data</h4>
+                <hr style="height: 3px; color: #1c7430; background-color: #1c7430">
+            </div>
+            <div class="modal-body">
+                <form action="/admin/zone" method="post">
+
+                    <input type="hidden" id="id" name="id">
+                    <label for="name" id="label1" class="control-label col-sm-5">Name</label>
+                    <input type="text" id="name" name="f1" class="form-control input-sm" >
+                    <br>
+
+                    <label for="name" id="label2" class="control-label col-sm-5">Name</label>
+                    <input type="text" id="name2" name="f2" class="form-control input-sm" >
+                    <br>
+
+                    <label for="name"id="label3" class="control-label col-sm-5">Name</label>
+                    <input type="text" id="name3" name="f3" class="form-control input-sm" >
+                    <br>
+
+                    <label for="name" id="label4" class="control-label col-sm-2">Name</label>
+                    <input type="text" id="name4" name="f4" class="form-control input-sm" >
+                    <br>
+
+                    <input type="submit" id="" style="margin-left: 40%" name="update-zone" class="btn btn-primary btn-sm" value="Update">
+                    <input type="submit" name="cancel" class="btn btn-warning btn-sm" value="Cancel">
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+</div>
+<br><br><br><br>
+<div id="footer" style="padding-top: 10px">
+    <p style="color: black; border-top: solid 1px #1b6d85; padding-top: 10px">   (c) Copyright <?php echo date('Y')?> - Loan MS V2.0 .</p>
+</div>
+
+<script src="/webkit/lib/js/popper.min.js"></script>
+<script>
+    $(function(){
+        $('a').each(function(){
+            if ($(this).prop('href') == window.location.href) {
+                $(this).addClass('active'); $(this).parents('li').addClass('active');
+            }
+        });
+    });
+</script>
+</body>
+</html>

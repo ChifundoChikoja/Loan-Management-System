@@ -1,0 +1,22 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: coutinho
+ * Date: 4/30/19
+ * Time: 1:49 PM
+ */
+require_once TEMP . 'top-bar2.phtml';
+require_once TEMP . 'accounts-header.phtml';
+?>
+
+<div class="container">
+    <div class="console">
+        <br>
+        <h4>home (accounts)</h4>
+        <hr style="border: none;height: 3px;color: #204d74;background-color: #204d74">
+        <div class="col-sm-12" style="background-color: #17a2b8; color: white; border-radius: 4px; margin-bottom: 20px">
+            <h5 style="padding: 8px">Welcome <?php echo Session::get('loggedIn')?></h5>
+        </div>
+    </div>
+</div>
+

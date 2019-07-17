@@ -1,0 +1,88 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: coutinho
+ * Date: 4/30/19
+ * Time: 1:49 PM
+ */
+require_once TEMP . 'top-bar2.phtml';
+require_once TEMP . 'private-nav.phtml';
+$groupInfo = $this->view_data['group'];
+?>
+
+<div class="container">
+    <div class="console">
+        <br>
+        <h4>Edit Group : <span class="fa fa-edit"></span> &nbsp; <?php echo $groupInfo[0]["name"]?></h4>
+        <hr style="border: none;height: 3px;color: #204d74;background-color: #204d74"
+        <div class="pchange-wrapper">
+            <form action="/private/group" method="post" class="pchange-form" id="pchange-form">
+                <h5 style="text-align: center"> Change Details </h5>
+                <hr style="height: 3px; color: #1c7430; background-color: #1c7430">
+
+                <div class="form-group">
+                    <div class="cols-sm-5">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control input-sm" name="name" id="name" value="<?= $groupInfo[0]['name'] ?>"placeholder="Name"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="cols-sm-5">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control input-sm" name="chair" id="surname" value="<?= $groupInfo[0]['chairID'] ?> (chair)" placeholder="Last Name"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="cols-sm-5">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-lock fa" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control input-sm" name="chairNO" id="maiden"  value="<?php echo $groupInfo[0]['chair_no']?> (cell)" placeholder="Maiden"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="cols-sm-5">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-lock fa" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control input-sm" name="vice" id="maiden"  value="<?php echo $groupInfo[0]['vchairID']?> (vice)" placeholder="Maiden"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="cols-sm-5">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-lock fa" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control input-sm" name="viceNO" id="maiden"  value="<?php echo $groupInfo[0]['vice_no']?> (vice cell)" placeholder=""/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="cols-sm-5">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-lock fa" aria-hidden="true"></i></span>
+<!--                            <input type="password" class="form-control input-sm" name="name" id="pass2"  placeholder="Enter new password again"/>-->
+                            <select name="zone" id="" class="form-control input-sm">
+                                <?php foreach ($this->view_data['zone'] as $zone):?>
+                                    <option value="<?php echo $zone['zoneID'] ?>"><?php echo $zone['name'] ?> (zone)</option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="groupID" value="<?php echo$groupInfo[0]['groupID']?>">
+                <button type="submit" name="gchange" class=" btn btn-success" style="margin-left: 17%">change Details</button>
+                <a href="/private/group" class=" btn btn-warning">cancel</a>
+
+            </form>
+        </div>
+    </div>
+</div>
+

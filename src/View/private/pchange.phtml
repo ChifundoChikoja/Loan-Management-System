@@ -1,0 +1,68 @@
+<?php
+require_once TEMP . 'top-bar2.phtml';
+require_once TEMP . 'private-nav.phtml';
+$userData = $this->view_data[0];
+if (empty($userData)){
+    require_once MODEL.'adminModel.php';
+    $model = new adminModel();
+    $userData = $model->user(Session::get('loggedID'),'',3);
+    $userData = $userData[0];
+}
+
+?>
+
+<div class="container">
+    <div class="console">
+        <br>
+        <h4>Edit <span class="fas fa-adjust"></span>: &nbsp; <?php echo $userData['userID']." ". $userData['firstname']." ".$userData['surname'] ?></h4>
+        <hr style="border: none;height: 3px;color: #204d74;background-color: #204d74">
+        <div class="row">
+            <div class="pchange-wrapper">
+                <form action="/private/pchange" method="post" class="pchange-form" id="pchange-form">
+                    <h5 style="text-align: center">Change Password</h5>
+                    <hr style="height: 3px; color: #1c7430; background-color: #1c7430">
+
+                    <div class="form-group">
+                        <div class="cols-sm-5">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                <input type="text" class="form-control input-sm" name="name" id="name" value="<?= $userData['firstname'] ?>" readonly  placeholder="Name"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="cols-sm-5">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                <input type="text" class="form-control input-sm" name="name" id="name" value="<?= $userData['surname'] ?>" readonly  placeholder="Name"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="cols-sm-5">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-lock fa" aria-hidden="true"></i></span>
+                                <input type="password" class="form-control input-sm" name="pass" id="pass"  placeholder="Enter new password"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="cols-sm-5">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-lock fa" aria-hidden="true"></i></span>
+                                <input type="password" class="form-control input-sm" name="name" id="pass2"  placeholder="Enter new password again"/>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="userID" value="<?= $userData['userID'] ?>">
+                    <button type="submit" name="pchange" class=" btn btn-success" style="margin-left: 7%">change Password</button>
+                    <a href="/admin/administration" class=" btn btn-warning">cancel</a>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

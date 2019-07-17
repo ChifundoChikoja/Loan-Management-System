@@ -1,0 +1,174 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: coutinho
+ * Date: 4/30/19
+ * Time: 2:15 PM
+ */
+require_once TEMP.'top-bar2.phtml';
+require_once TEMP.'private-nav.phtml';
+$clients = $this->view_data ;
+
+?>
+
+<div class="container">
+    <div class="console">
+        <br>
+        <h4>Disbursment (private)</h4>
+        <hr style="border: none;height: 3px;color: #204d74;background-color: #204d74">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h5 style="text-align: center" class="panel-title"> Create Loans </h5>
+                    </div>
+                    <div class="panel-body">
+                        <form action="/private/disbursement" method="post">
+                            <div class="form-group">
+                                <label for="client" class="control-label col-sm-2">Client: </label>
+                                <div class="col-sm-7">
+                                        <select name="client" id="client" class="form-control input-sm">
+                                            <option value="">-- select client --</option>
+                                            <?php foreach ($clients as $client): ?>
+                                                <option value="<?php echo $client['clientID'] ?>"> <?php echo $client['firstname']." ".$client['surname']."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$client['gname'] ?></option>
+                                            <?php endforeach;  ?>
+                                        </select>
+                                </div>
+                                <br><br>
+                                <div class="form-group">
+                                    <label for="amounts" class="control-label col-sm-2">Amount</label>
+                                    <div class="col-sm-7">
+                                        <select name="amounts" id="amounts" class="form-control input-sm"">
+                                            <?php for ($a = 5000; $a<100000; $a = $a+5000): ?>
+                                                <option value="<?php echo $a ?>"><?php echo $a; ?></option>
+                                                <?php $minimum += 5000; endfor; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <br><br>
+                                <div class="form-group">
+                                    <label for="date" class="control-label col-sm-2">Date:</label>
+                                    <div class="col-sm-7">
+                                        <input type="date" name="date" id="date" class="form-control input-sm" required>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="form-group">
+                                    <label for="rdate" class="control-label col-sm-2">Onset:</label>
+                                    <div class="col-sm-7">
+                                        <input type="date" name="rdate" id="rdate" class="form-control input-sm" required>
+                                        <br>
+                                        <input type="hidden" name="officer" value="<?php echo Session::get('loggedIn')?>">
+                                        <input type="hidden" name="trans-date" value="<?php echo date("d-m-Y")."  ". date("h:i:sa");?>">
+                                        <input type="submit" name="disburse" id="disburse" style="width: 100%" class="btn btn-primary btn-sm" value="Create loan">
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <?php
+                $loan = privateController::$arrayContainer;
+                if (!empty($loan)):?>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title" style="text-align: center">
+                                Confirm Loan Disbursment for: <b><?php echo $loan['fname']." ".$loan['maiden']." ".$loan['sname'];  ?> </b>
+                            </h4>
+                        </div>
+                        <div class="panel-body">
+                            <div class="">
+                                <div class="row">
+                                    <div class="col-sm-9">
+                                        <form action="/private/disbursement" method="post" onsubmit="return checkPassword()">
+                                            <input type="hidden" name="ClientID" value="<?php echo $loan['clientID']?>">
+                                            <input type="hidden" name="officer" value="<?php echo $loan['officer']?>">
+                                            <input type="hidden" name="loan-date" value="<?php echo $loan['loanDate']?>">
+                                            <input type="hidden" name="transaction-date" value="<?php echo $loan['transactionDate']?>">
+                                            <div class="form-group">
+                                                <label for="amount" class="control-label col-sm-4">Amount: </label>
+                                                <div class="col-sm-5">
+                                                    <input type="text" id="amount" name="amount" value="<?php echo $loan['amt']?> " class="form-control input-sm" readonly>
+                                                </div>
+                                            </div>
+                                            <br><br>
+                                            <div class="form-group">
+                                                <label for="daily" class="control-label col-sm-4">Daily:</label>
+                                                <div class="col-sm-5">
+                                                    <input type="text" name="daily" id="daily" value="<?php echo $loan['daily']?> " class="form-control input-sm" readonly>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="form-group">
+                                                <label for="total" class="control-label col-sm-4">Repayment: </label>
+                                                <div class="col-sm-5">
+                                                    <input type="text" id="total" name="total" value="<?php echo $loan['total']?> " class="form-control input-sm" readonly>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="form-group">
+                                                <label for="total-interest" class="control-label col-sm-4">Interest</label>
+                                                <div class="col-sm-5">
+                                                    <input type="text" name="total-interest" id="total-interest" value="<?php echo $loan['interest']?> " class="form-control input-sm" readonly>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="form-group">
+                                                <label for="start-date" class="control-label col-sm-4">Repayment Onset</label>
+                                                <div class="col-sm-5">
+                                                    <input type="text" name="start-date" id="start-date" value="<?php echo $loan['onset']?> " class="form-control input-sm" readonly>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="form-group">
+                                                <label for="last" class="control-label col-sm-4">last Repayment Date</label>
+                                                <div class="col-sm-5">
+                                                    <input type="text" name="last" id="last" value="<?php echo $loan['last']?> " class="form-control input-sm" readonly>
+                                                    <br>
+                                                    <input type="submit" name="save-loan" class="btn btn-primary btn-sm" style="width:45%" value="Disburse">
+                                                    <input type="submit" name="cancel" class="btn btn-danger btn-sm" style="width:50%" value="Cancel">
+
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-sm-2">
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                <?php else: ?>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title" style="text-align: center">Loan Creation Portal</h4>
+                        </div>
+                        <div class="panel-body">
+                            <ul>
+                                <p>Please Submit the details and confirm the details to create loans</p>
+                                <p><b>NB: </b> The created loans <b>Must be </b> be approved by the admin before being disbursed </p>
+                            </ul>
+                        </div>
+                    </div>
+                <?php endif; ?>
+                <?php if (!empty(privateController::$message)): ?>
+                    <div class="panel-success">
+                        <h5 class="panel-heading" style="text-align: center"> Success:  <?= privateController::$message ?></h5>
+                    </div>
+                <?php endif; ?>
+                <?php if (!empty(privateController::$error)): ?>
+                    <div class="panel-danger">
+                        <h5 class="panel-heading" style="text-align: center"> Error:  <?php echo privateController::$error ?></h5>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</div>

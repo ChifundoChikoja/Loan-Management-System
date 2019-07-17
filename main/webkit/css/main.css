@@ -1,0 +1,143 @@
+
+html, body {
+    height: 100%;
+    min-height: 90%;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    background: whitesmoke;
+    overflow-x: hidden;
+}
+
+#footer{
+    position: fixed;
+    clear: both;
+    bottom: 0;
+    width: 99%;
+    text-align: left;
+
+}
+body {
+    margin: 1px;
+}
+
+/*login form*/
+.login-wrapper {
+    margin-top: 150px;
+    margin-bottom: 80px;
+}
+
+.form-signin {
+    max-width: 280px;
+    padding: 10px 35px 30px;
+    margin: 0 auto;
+    background-color: #fff;
+    /*border: 1px solid rgba(0, 0, 0, 0.1);*/
+    box-shadow: 0px 5px 35px black
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+    margin-bottom: 30px;
+}
+.form-signin .checkbox {
+    font-weight: normal;
+}
+.form-signin .form-control {
+    position: relative;
+    height: auto;
+    padding-top: 2px;
+    margin-top: 3px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.form-signin .form-control:focus {
+    z-index: 2;
+}
+.form-signin input[type="text"] {
+    margin-bottom: -1px;
+    padding: 5px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    background-color: whitesmoke;
+}
+.form-signin input[type="password"] {
+    margin-bottom: 20px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+
+/*pchange form */
+
+.pchange-form{
+    max-width: 400px;
+    padding: 10px 35px 30px;
+    margin: 0 auto;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.view-client{
+    max-width: 900px;
+    padding: 10px 35px 30px;
+    margin: 0 auto;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+/* Table Header */
+
+.data-table thead th {
+    background-color: #508abb;
+    color: #FFFFFF;
+    border-color: #6ea1cc !important;
+    text-transform: uppercase;
+}
+
+
+.navbar-custom {
+    margin-bottom: 0px;
+    background-color: #2e6da4;
+    color: #9e9e9e;
+}
+
+.blue-text {
+    color: blue;
+}
+
+.flat{
+    border-radius: 0;
+    padding: 2px;
+    height: 30px;
+    width: 150px;
+}
+
+.flat-in{
+    border-radius: 0;
+}
+.table-btn{
+    height: 25px;
+    padding: 2px;
+    border-radius: 2px;
+    -moz-text-size-adjust: auto;
+}
+
+.panel-default{
+    background-color: whitesmoke;
+}
+.medium-text{
+    font-size: 13px;
+}
+.error {
+    color: #843534;
+    margin-left: 5px;
+}
+
+
+
+.lightbtn{
+    background-color: whitesmoke;
+    color: #2e6da4;
+    border: 0;
+    margin-left: 5px;
+}

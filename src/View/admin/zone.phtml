@@ -1,0 +1,136 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: coutinho
+ * Date: 5/4/19
+ * Time: 11:05 AM
+ */
+require_once TEMP . 'top-bar.phtml';
+require_once TEMP . 'admin-nav.phtml';
+//var_dump(Session::get('loggedIn'));
+//var_dump(Data::$zones);
+$iterator = 1;
+$editing_index = '';
+?>
+
+<div class="container">
+    <div class="console">
+        <br>
+        <h4>Zones (private)</h4>
+        <hr style="border: none;height: 3px;color: #204d74;background-color: #204d74">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4>Create Zone <span class="fa fa-group"></span></h4>
+                    </div>
+                    <div class="panel-body">
+                        <form action="/admin/zone" method="post">
+                            <div class="form-group">
+                                <label for="zone" class="control-label col-sm-5">Zone Name:</label>
+                                <div class="col-sm-5">
+                                    <input type="text" name="zone" id="zone" class="form-control input-sm" placeholder="Zone name" required>
+                                </div>
+                                <br>
+                            </div>
+                            <div class="form-group">
+                                <label for="location" class="control-label col-sm-5">location:</label>
+                                <div class="col-sm-5">
+                                    <input type="text" name="location" id="location" class="form-control input-sm" placeholder="Zone location" required>
+                                </div>
+                                <br>
+                            </div>
+                            <div class="form-group">
+                                <label for="zone-chair" class="control-label col-sm-5">Zone Chair:</label>
+                                <div class="col-sm-5">
+                                    <input type="text" name="zone-chair" id="zone-chair" class="form-control input-sm" placeholder="Zone chair" required>
+                                </div>
+                                <br>
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <label for="zone-chair" class="control-label col-sm-5">Zone Chair No:</label>
+                                <div class="col-sm-5">
+                                    <input type="text" name="zone-chair#" id="zone-chair#" class="form-control input-sm" placeholder="Zone chair" required>
+                                </div>
+                                <br>
+                            </div>
+                            <br>
+                            <input type="submit" name="addZone" class="btn btn-primary btn-sm" value="Create Zone " style="width: 80%">
+                        </form>
+                        <?php if (!empty(adminController::$message)): ?>
+                            <div class="panel-success">
+                                <h5 class="panel-heading" style="text-align: center"> <?= adminController::$message ?></h5>
+                            </div>
+                        <?php endif; ?>
+                        <?php if (!empty(adminController::$error)): ?>
+                            <div class="panel-danger">
+                                <h5 class="panel-heading" style="text-align: center"> <?= adminController::$error ?></h5>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title" style="text-align: center">Manage Zones <span class=""></span></h4>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-striped" style="font-size: 14px">
+                            <thead>
+                            <tr>
+                                <th>Zone No</th>
+                                <th>Zone ID</th>
+                                <th>Name</th>
+                                <th>Location</th>
+                                <th colspan="">Chair</th>
+                                <th>Chair Contact</th>
+                                <th colspan="2">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <?php foreach ($this->view_data as $zone): ?>
+                                <td><?php echo $iterator; ?></td>
+                                <td><?php echo $zone['zoneID'] ?></td>
+                                <td><?php echo $zone['name'] ?></td>
+                                <td><?php echo $zone['location'] ?></td>
+                                <td><?php echo $zone['Chair_Name'] ?></td>
+                                <td><?php echo $zone['zone_chair'] ?></td>
+                                <td>
+                                    <div>
+                                        <form action="/admin/zone" method="post">
+                                            <input type="hidden" value="<?php echo $zone['zoneID'] ?>" id="index" name="index">
+                                            <input type="button" name="edit"  value="Edit" class="btn btn-primary table-btn edit_data" id="<?php echo $zone['zoneID'] ?>">
+                                            <input type="submit" name="delete-zone" class="btn btn-danger table-btn" value="Delete"> &nbsp;
+                                        </form>
+                                    </div>
+                                </td>
+
+                            </tr>
+                            <?php $iterator++; ?>
+                            <?php endforeach;; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Edit Zone Modal-->
+    <div class="modal " id="edit-zone-mod">
+        <a href="#" rel="modal:close">Close &times;</a>
+        <div class="modal-dialog">
+            <h4 style="margin-left: 30%">Edit Zone <span class="fa fa-edit"></span></h4>
+            <hr>
+
+        </div>
+
+        <div class="modal-footer" style="float: left; margin-left: 35%">
+            <a href="#" rel="modal:close" class="btn btn-danger btn-sm">Cancel</a>
+            <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Update</button>
+        </div>
+    </div>
+</div>
+

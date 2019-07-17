@@ -1,0 +1,102 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: coutinho
+ * Date: 2/14/19
+ * Time: 12:41 PM
+ */
+require_once TEMP.'top-bar.phtml';
+require_once TEMP.'admin-nav.phtml';
+//var_dump($this->view_data);
+$disbursments = $this->view_data;
+$counter =1;
+?>
+
+<div class="container">
+    <div class="console">
+        <br>
+        <h4>My Console</h4>
+        <hr style="border: none;height: 3px;color: #204d74;background-color: #204d74">
+        <div class="col-sm-12" style="background-color: #17a2b8; color: white; border-radius: 4px">
+            <h5 style="padding: 8px">Welcome <?php echo Session::get('loggedIn')?></h5>
+        </div>
+        <br><br><br>
+        <div class="row">
+            <br>
+            <div class="col-sm-9">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            Pending Disbursments <span class="fa fa-thumbs-up"></span>
+                        </h4>
+                    </div>
+                    <div class="panel-body" style="background-color: whitesmoke">
+                        <br>
+                        <?php if (!empty($disbursments)): ?>
+                        <div class="table-responsive ">
+                            <table class="table table-striped medium-text">
+                                <thead>
+                                <tr>
+                                    <th>Loan no</th>
+                                    <th>Created by</th>
+                                    <th>Date</th>
+                                    <th>Amount (mwk)</th>
+                                    <th>Client</th>
+                                    <th>Group</th>
+                                    <th colspan="2">Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <?php foreach ($disbursments as $disbursment): ?>
+                                    <td><?php echo $counter?></td>
+                                    <td><?php echo $disbursment['officer']?></td>
+                                    <td><?php echo $disbursment['date_taken']?></td>
+                                    <td><?php echo $disbursment['amount']?></td>
+                                    <td><?php echo $disbursment['firstname']." ".$disbursment['surname']?></td>
+                                    <td><?php echo $disbursment['gname']?></td>
+                                    <td>
+                                            <form action="/admin/disbursement" method="post">
+                                                <input type="hidden" value="<?=$disbursment['loanID'] ;?>" name="loanID">
+                                                <input type="hidden" value="<?=$disbursment['clientID']?>" name="client">
+                                                <button type="submit" name="approve" class="btn btn-primary table-btn">Approve <span class="fas fa-send"></span></button>
+                                                <button type="submit" name="decline" class="btn btn-danger table-btn">Decline <span class="fas fa-remove"></span></button>
+                                            </form>
+                                    </td>
+                                </tr>
+                                <?php $counter++; endforeach; ?>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <?php else: ?>
+                           <div class="panel-success">
+                              <h5 class="panel-heading" style="text-align: center">No Loans are Disbursed Yet: <span class="fa fa-battery-empty"></span></h5>
+                           </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <br>
+
+            </div>
+            <div class="col-sm-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h5 style="text-align: center" class="panel-title">Quick Summary <span class="fa fa-book"></span></h5>
+                    </div>
+                    <div class="panel-body" style="min-height: 30px"></div>
+                </div>
+                <?php if (!empty(adminController::$message)): ?>
+                    <div class="panel-success">
+                        <h5 class="panel-heading" style="text-align: center"> <?= adminController::$message ?></h5>
+                    </div>
+                <?php endif; ?>
+                <?php if (!empty(adminController::$error)): ?>
+                    <div class="panel-danger">
+                        <h5 class="panel-heading" style="text-align: center"> <?= adminController::$error ?></h5>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</div>

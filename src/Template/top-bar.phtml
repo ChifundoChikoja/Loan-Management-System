@@ -1,0 +1,29 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: coutinho
+ * Date: 2/17/19
+ * Time: 10:56 AM
+ */
+?>
+<nav class="navbar navbar-custom" role="navigation" style="margin-left: 1px; margin-right: 1px; border-radius: 0; border: none">
+    <div class="container-fluid">
+        <div class="navbar-header">
+           <h5 style="color: silver">Loan Management System</h5>
+        </div>
+
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                <a style="; color: #c8cbcf" class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo Session::get('loggedIn') ?>
+                    <img src="/webkit/img/Icons/user_male_circle_filled_50px.png" height="30px" alt="user"><span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#" style="color: #204d74; background-color: white">change password</a></li>
+                    <li><a href="/admin/logout" style="color: #204d74; background-color: white">logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+
+</nav>
+

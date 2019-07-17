@@ -1,0 +1,104 @@
+<?php
+require_once TEMP.'top-bar2.phtml';
+require_once TEMP.'private-nav.phtml';
+$counter = 1;
+
+require_once MODEL.'adminModel.php';
+$adminModel = new adminModel();
+$zones = $adminModel->zone('','',2);
+?>
+
+<div class="container">
+    <div class="console">
+        <br>
+        <h4>Groups (private)</h4>
+        <hr style="border: none;height: 3px;color: #204d74;background-color: #204d74">
+        <div class="row">
+            <div class="col-sm-4">
+                <div>
+                    <form action="/private/group" method="post">
+                        <label for="gname" class="control-label col-md-4">Group(name)</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control input-sm" name="gname" id="gname">
+                        </div>
+                        <br><br>
+
+                        <label for="gchair" class="control-label col-md-4">Chairman</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control input-sm" name="chair" id="gchair">
+                        </div>
+                        <br><br>
+                        <label for="cell" class="control-label col-md-4">cell (chair)</label>
+                        <div class="col-md-6">
+                            <input type="number" class="form-control input-sm" name="cell" id="cell">
+                        </div>
+                        <br><br>
+                        <label for="vice" class="control-label col-md-4">vice Chair</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control input-sm" name="vice" id="vice">
+                        </div>
+                        <br><br>
+                        <label for="zone" class="control-label col-md-4">Zone</label>
+                        <div class="col-md-6">
+                            <select name="zone" id="zone" class="form-control input-sm">
+                                <?php foreach ($zones as $zone): ?>
+                                <option value="<?php echo $zone['zoneID'] ?>"><?php echo $zone['name']; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <br><br>
+
+                        <input type="submit" name="add-group" class="btn btn-primary btn-block btn-sm" value="add group" style="margin-left: 4%; width: 75%">
+                    </form>
+                    <?php if (!empty(privateController::$message)): ?>
+                    <div class="panel-success" style="width: 75%; margin-left: 3%">
+                        <h5 class="panel-heading"><?php echo privateController::$message ?></h5>
+                    </div>
+                    <?php endif; ?>
+                    <?php if (!empty(privateController::$error)): ?>
+                        <div class="panel-danger" style="width: 75%; margin-left: 3%">
+                            <h5 class="panel-heading"><?php echo privateController::$error ?></h5>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <div class="col-sm-8">
+              <div class="table-responsive">
+                  <table class="table table-bordered table-hover " >
+
+                      <tr>
+                          <th>No</th>
+                          <th>Group ID</th>
+                          <th>Name</th>
+                          <th>Group Chair</th>
+                          <th>Contact</th>
+                          <th>Vice</th>
+                          <th>Zone</th>
+                          <th colspan="2">Action</th>
+                      </tr>
+
+                      <tr>
+                          <?php foreach ($this->view_data as $group): ?>
+                          <td><?php echo $counter?></td>
+                          <td><?php echo $group['groupID'] ?></td>
+                          <td><?php echo $group['name'] ?></td>
+                          <td><?php echo $group['chairID'] ?></td>
+                          <td><?php echo $group['chair_no'] ?></td>
+                          <td><?php echo $group['vchairID'] ?></td>
+                          <td><?php echo $group['zname'] ?></td>
+                          <td>
+                              <form action="/private/group" method="post">
+                                  <input type="hidden" value="<?php echo $group['groupID'] ?>" name="groupID" >
+                                  <input type="submit" name="edit-group" class="btn btn-primary table-btn" value="edit">
+                                  <input type="submit" class="btn btn-danger table-btn" value="delete">
+                              </form>
+                          </td>
+                      </tr>
+                      <?php $counter++; endforeach; ?>
+                  </table>
+              </div>
+
+            </div>
+        </div>
+    </div>
+</div>

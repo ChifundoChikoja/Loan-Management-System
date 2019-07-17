@@ -1,0 +1,54 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: coutinho
+ * Date: 4/30/19
+ * Time: 2:15 PM
+ */
+require_once TEMP.'top-bar2.phtml';
+require_once TEMP.'private-nav.phtml';
+//var_dump(Session::get('loggedIn'));
+?>
+
+<div class="container">
+    <div class="console">
+        <br>
+        <h4>Views (private)</h4>
+        <hr style="border: none;height: 3px;color: #204d74;background-color: #204d74">
+        <div class="row">
+            <div class="col-sm-3">
+                <aside>
+                    <h6>Find a client</h6>
+                    <hr>
+                    <form method="post" class="form-inline" id="find-client-form">
+                        <input type="text" id="client-index" style="" class="form-control input-sm" placeholder="Search.." name="search">
+                        <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-search"></i></button>
+                    </form>
+                </aside>
+            </div>
+
+            <div class="col-sm-12">
+                <br>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div id="client-result-display" style="position: relative; height: 200px; min-height:100px; overflow: auto">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <?php if (!empty(privateController::$message)): ?>
+            <div class="panel-success">
+                <h5 class="panel-heading" style="text-align: center"> <?= privateController::$message ?></h5>
+            </div>
+        <?php endif; ?>
+        <?php if (!empty(privateController::$error)): ?>
+            <div class="panel-danger">
+                <h5 class="panel-heading" style="text-align: center"> <?= privateController::$error ?></h5>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>

@@ -1,0 +1,52 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: coutinho
+ * Date: 2/14/19
+ * Time: 12:41 PM
+ */
+require_once TEMP.'top-bar.phtml';
+require_once TEMP.'admin-nav.phtml';
+?>
+
+<div class="container">
+    <div class="console">
+        <br>
+        <h4>My Console</h4>
+        <hr style="border: none;height: 3px;color: #204d74;background-color: #204d74">
+        <div class="col-sm-12" style="background-color: #17a2b8; color: white; border-radius: 4px; margin-bottom: 20px">
+            <h5 style="padding: 8px">Welcome <?php echo Session::get('loggedIn')?></h5>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h5 class="" style="text-align: center; color: #d9534f">Notifications <span class="fa fa-bell"></span></h5>
+                    </div>
+                    <div class="panel-body">
+                        <h5 style="text-align: center; color: #0c5460"><span class="fa fa-hand-point-right"></span> Loan Disbursments Available </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <h5 style="text-align: center; color: #d9534f">News and Notices <span class="fa fa-signal"></span></h5>
+                <hr>
+            </div>
+            <div class="col-sm-4">
+                <h5 style="text-align: center; color: #d9534f">Quick Summary <span class="fa fa-info"></span></h5>
+                <hr>
+                <div class="quicksummary" style=" box-shadow: 0px 5px 35px black;">
+                    <h5 style="text-align: center; padding: 3px"> Quick Summary</h5>
+                    <div style="margin-left: 15px; margin-top: 3%">
+                        <h6 style="color:">All Loans <span class="badge"><?php echo $this->view_data['totalLoans']?></span></h6>
+                        <h6 style="">All Clients <span class="badge"><?php echo $this->view_data['totalClients'] ?></span> &nbsp; (male = <?php echo $this->view_data['male']?>, female = <?php echo $this->view_data['female']?>)</h6>
+                        <h6 style="">All Groups <span class="badge"><?php echo $this->view_data['totalGroups']?></span></h6>
+                        <button class="btn btn-primary btn-block btn-sm" style="width: 95%">Generate Report</button>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
